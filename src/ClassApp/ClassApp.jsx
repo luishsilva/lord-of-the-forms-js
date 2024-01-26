@@ -5,11 +5,14 @@ import { ProfileInformation } from "../ProfileInformation";
 export class ClassApp extends Component {
 
   state = {
-    city: "",
-    email: "",
-    firstName: "",
-    lastName: "",
-    phone: "",
+    isFormSubmitted: false,
+    inputState: {
+      city: "",
+      email: "",
+      firstName: "",
+      lastName: "",
+      phone: "",
+    }
   }
 
   setAppState = (newState) => {
@@ -18,11 +21,20 @@ export class ClassApp extends Component {
 
   onHandleSubmit = (e) => {
     e.preventDefault();
+    this.validadeForm(this.state)
+    this.setState(
+      {isFormSubmitted: true}
+    );
     console.log(this.state)
   }
 
+  validadeForm = (formInputs) => {
+    console.log(formInputs)
+  }
+
   render() {
-    const { email, firstName, lastName, phone, city, } = this.state;
+    const { email, firstName, lastName, phone, city, } = this.state.inputState;
+    const { isFormSubmitted } = this.state;
     
     return (
       <>
@@ -35,9 +47,10 @@ export class ClassApp extends Component {
           }
         />
         <ClassForm 
+          isFormSubmitted={isFormSubmitted}
+          onSubmit={this.onHandleSubmit}
           stateData={this.state}
           setStateMethod={this.setAppState}
-          onSubmit={this.onHandleSubmit}
         />
       </>
     );
