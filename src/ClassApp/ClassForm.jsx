@@ -11,7 +11,12 @@ const phoneNumberErrorMessage = "Invalid Phone Number";
 export class ClassForm extends Component {
   handleChange = (e) => {
     const { name, value } = e.target;
-    this.props.setStateMethod({ [name]: value });
+    this.props.setStateMethod((prevState) => ({
+      inputState: {
+        ...prevState.inputState,
+        [name]: value,
+      },
+    }));
   };
 
   render() {
