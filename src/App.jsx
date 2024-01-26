@@ -13,9 +13,9 @@ function App() {
         <h4>Your Journey to good form UI Starts Here</h4>
         <h4>Always remember.. One does not simply fill out a react form</h4>
         <div className="forms-container">
-          <div className="left">
+{/*           <div className="left">
             <FunctionalApp />
-          </div>
+          </div> */}
           <div className="right">
             <ClassApp />
           </div>
