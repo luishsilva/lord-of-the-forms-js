@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { ClassForm } from "./ClassForm";
 import { ProfileInformation } from "../ProfileInformation";
+import { isEmailValid, isInputLenghtValid } from "../utils/validations"
 
 export class ClassApp extends Component {
 
@@ -21,15 +22,42 @@ export class ClassApp extends Component {
 
   onHandleSubmit = (e) => {
     e.preventDefault();
-    this.validadeForm(this.state)
+    this.validadeForm(this.state.inputState)
     this.setState(
       {isFormSubmitted: true}
     );
-    console.log(this.state)
   }
 
   validadeForm = (formInputs) => {
-    console.log(formInputs)
+    if(formInputs != null){
+      Object.entries(formInputs).forEach(([key, value]) => {
+        switch (key) {
+          case 'firstName':
+            if (isInputLenghtValid(value,2)) {
+              console.log('first name valid')
+            } else {
+              console.log('first name not valid')
+            }
+            break;
+          case 'lastName':
+            if (isInputLenghtValid(value,2)) {
+              console.log('last name valid')
+            } else {
+              console.log('last name not valid')
+            }
+            break;
+          case 'email':
+            if (isEmailValid(value)) {
+              console.log('email valid')
+            } else {
+              console.log('email not valid')
+            }
+            break;
+          default:
+            break;
+        }
+      });
+    }
   }
 
   render() {
