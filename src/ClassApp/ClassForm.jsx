@@ -20,9 +20,9 @@ export class ClassForm extends Component {
   };
 
   render() {
-    const { onSubmit } = this.props;
+    const { allCities, onSubmit } = this.props;
     const { city, email, firstName, lastName, phone } = this.props.stateData;
-    
+    console.log(allCities)
     return (
       <form onSubmit={onSubmit}>
         <u>
@@ -75,6 +75,15 @@ export class ClassForm extends Component {
           }
         />
         <ErrorMessage message={cityErrorMessage} show={true} />
+        <select name="pets" id="pet-select">
+          <option value="">--Please choose an option--</option>
+          <option value="dog">Dog</option>
+          <option value="cat">Cat</option>
+          <option value="hamster">Hamster</option>
+          <option value="parrot">Parrot</option>
+          <option value="spider">Spider</option>
+          <option value="goldfish">Goldfish</option>
+        </select>
 
         <div className="input-wrap">
           <label htmlFor="phone">Phone:</label>

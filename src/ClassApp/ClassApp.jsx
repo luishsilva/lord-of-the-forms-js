@@ -2,6 +2,7 @@ import { Component } from "react";
 import { ClassForm } from "./ClassForm";
 import { ProfileInformation } from "../ProfileInformation";
 import { isEmailValid, isInputLenghtValid } from "../utils/validations"
+import { allCities } from "../utils/all-cities"
 
 export class ClassApp extends Component {
 
@@ -75,6 +76,7 @@ export class ClassApp extends Component {
           }
         />
         <ClassForm 
+          allCities={allCities}
           isFormSubmitted={isFormSubmitted}
           onSubmit={this.onHandleSubmit}
           stateData={this.state}
