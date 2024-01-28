@@ -22,6 +22,7 @@ export class ClassForm extends Component {
   render() {
     const { onSubmit } = this.props;
     const { city, email, firstName, lastName, phone } = this.props.stateData;
+    
     return (
       <form onSubmit={onSubmit}>
         <u>
