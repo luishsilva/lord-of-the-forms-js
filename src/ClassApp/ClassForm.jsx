@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { ErrorMessage } from "../ErrorMessage";
 import { TextInput } from "./components/TextInput";
+import { SelectInput } from "./components/SelectInput";
 
 const firstNameErrorMessage = "First name must be at least 2 characters long";
 const lastNameErrorMessage = "Last name must be at least 2 characters long";
@@ -12,17 +13,37 @@ export class ClassForm extends Component {
   handleChange = (e) => {
     const { name, value } = e.target;
     this.props.setStateMethod((prevState) => ({
+      ...prevState,
       inputState: {
         ...prevState.inputState,
         [name]: value,
       },
-    }));
+    }), this.populateDatalist);
+  };
+
+  populateDatalist = () => {
+    const { allCities, stateData:{inputState} } = this.props;
+
+    const datalist = document.getElementById('cities');
+    const filteredCities = allCities.filter(city =>
+      city.toLowerCase().includes(inputState.city.toLowerCase())
+    );
+
+    // Clear existing options
+    datalist.innerHTML = '';
+
+    // Populate datalist with filtered cities
+    filteredCities.forEach(city => {
+      const option = document.createElement('option');
+      option.value = city;
+      datalist.appendChild(option);
+    });
   };
 
   render() {
-    const { allCities, onSubmit } = this.props;
+    const { onSubmit } = this.props;
     const { city, email, firstName, lastName, phone } = this.props.stateData;
-    console.log(allCities)
+
     return (
       <form onSubmit={onSubmit}>
         <u>
@@ -71,19 +92,15 @@ export class ClassForm extends Component {
           inputProps={{
             placeholder:"Hobbiton",
             name: "city",
-            onChange: this.handleChange}
-          }
+            list: "cities",
+            onChange: (e) => {
+              this.handleChange(e);
+              this.populateDatalist();
+            },
+          }}
         />
+        <datalist id="cities" />
         <ErrorMessage message={cityErrorMessage} show={true} />
-        <select name="pets" id="pet-select">
-          <option value="">--Please choose an option--</option>
-          <option value="dog">Dog</option>
-          <option value="cat">Cat</option>
-          <option value="hamster">Hamster</option>
-          <option value="parrot">Parrot</option>
-          <option value="spider">Spider</option>
-          <option value="goldfish">Goldfish</option>
-        </select>
 
         <div className="input-wrap">
           <label htmlFor="phone">Phone:</label>
