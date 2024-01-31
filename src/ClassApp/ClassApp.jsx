@@ -54,6 +54,13 @@ export class ClassApp extends Component {
               console.log('email not valid')
             }
             break;
+          case 'city':
+            if (allCities.includes(value)) {
+              console.log('City valid')
+            } else {
+              console.log('City not valid')
+            }
+            break;
           default:
             break;
         }
