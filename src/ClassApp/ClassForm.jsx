@@ -45,38 +45,34 @@ export class ClassForm extends Component {
   };
 
   handlePhoneInputChange = (index) => (e) => {
-    const value = e.target.value.trim();
-    if (value !== '') {
-      const lengths = [2, 2, 2, 1];
-      const currentMaxLength = lengths[index];
-      const nextRef = this.state.refs[index + 1];
-      const prevRef = this.state.refs[index > 0 ? index - 1 : index];
-      const shouldGoToNextRef = currentMaxLength === value.length;
-      const shouldGoToPrevRef = value.length === 0;
+    const value = e.target.value;
+    const lengths = [2, 2, 2, 1];
+    const currentMaxLength = lengths[index];
+    const nextRef = this.state.refs[index + 1];
+    const prevRef = this.state.refs[index > 0 ? index - 1 : index];
+    const shouldGoToNextRef = currentMaxLength === value.length;
+    const shouldGoToPrevRef = value.length === 0;
       
-      // control input focus
-      if (shouldGoToNextRef) {
-        if (nextRef !== undefined) {
-          nextRef.current?.focus();
-        }
+    if (shouldGoToNextRef) {
+      if (nextRef !== undefined) {
+        nextRef.current?.focus();
       }
-
-      //control input focus
-      if (shouldGoToPrevRef) {
-        if (prevRef !== undefined) {
-          prevRef.current?.focus();
-        }
-      }
-      
-      this.setState(prevState => {
-        // Create a new array by spreading the previous refs
-        const newRefs = [...prevState.refs];
-        
-        newRefs[index].current.value = value.slice(0, currentMaxLength);
-        return { refs: newRefs };
-      });
-      //console.log(this.state.refs[index].current?.value)
     }
+
+    if (shouldGoToPrevRef) {
+      if (prevRef !== undefined) {
+        prevRef.current?.focus();
+      }
+    }
+      
+    this.setState(prevState => {
+      // Create a new array by spreading the previous refs
+      const newRefs = [...prevState.refs];
+      
+      newRefs[index].current.value = value.slice(0, currentMaxLength);
+      return { refs: newRefs };
+    });
+      //console.log(this.state.refs[index].current?.value)
 /*     if (shouldGoToNextRef) {
       if (nextRef !== undefined) {
         nextRef.current?.focus();
