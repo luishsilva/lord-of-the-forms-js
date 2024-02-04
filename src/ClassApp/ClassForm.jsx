@@ -72,67 +72,18 @@ export class ClassForm extends Component {
       newRefs[index].current.value = value.slice(0, currentMaxLength);
       return { refs: newRefs };
     });
-      //console.log(this.state.refs[index].current?.value)
-/*     if (shouldGoToNextRef) {
-      if (nextRef !== undefined) {
-        nextRef.current?.focus();
-      }
-    }
-
-    if (shouldGoToPrevRef) {
-      if (prevRef !== undefined) {
-        prevRef.current?.focus();
-      }
-    }
-
-    const newState = this.state.phoneInputState.map((phoneInput, phoneInputIndex) => 
-      index === phoneInputIndex ? e.target.value : phoneInput
-    );
-
-    this.setState({
-      phoneInputState : newState,
-    })
-
-    switch (index) {
-      case 0:
-        if (index === 0 && !isInputLengthValid(e.target.value,2)) {
-          this.addInputErrorValidate(e.target.name);
-          this.phoneValidateErrors(true)
-        } else {
-          this.removeInputErrorValidate(e.target.name);
-          this.phoneValidateErrors(false)
-        } 
-        break;
-      case 1: 
-        if (index === 1 && !isInputLengthValid(e.target.value,2)) {
-          this.addInputErrorValidate(e.target.name);
-          this.phoneValidateErrors(true)
-        } else {
-          this.removeInputErrorValidate(e.target.name);
-          this.phoneValidateErrors(false)
-        }   
-        break;    
-      case 2: 
-        if (index === 2 && !isInputLengthValid(e.target.value,2)) {
-          this.addInputErrorValidate(e.target.name);
-          this.phoneValidateErrors(true)
-        } else {
-          this.removeInputErrorValidate(e.target.name);
-          this.phoneValidateErrors(false)
-        }   
-        break; 
-      case 3:
-        if (index === 3 && !isInputLengthValid(e.target.value,1)) {
-          this.addInputErrorValidate(e.target.name);
-          this.phoneValidateErrors(true)
-        } else {
-          this.removeInputErrorValidate(e.target.name);
-          this.phoneValidateErrors(false)
-        }   
-        break;   
-      default:
-        break;
-    } */
+    
+    this.props.setStateMethod((prevState) => {
+      const phoneValue = this.state.refs.map(ref => ref.current.value);
+    
+      return {
+        ...prevState,
+        inputState: {
+          ...prevState.inputState,
+          phone: phoneValue,
+        },
+      };
+    });
   }
 
   render() {
