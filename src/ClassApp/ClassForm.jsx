@@ -22,11 +22,11 @@ export class ClassForm extends Component {
   };
 
   populateDatalist = () => {
-    const { allCities, stateData:{inputState} } = this.props;
+    const { allCities, stateData:{city} } = this.props;
 
     const datalist = document.getElementById('cities');
     const filteredCities = allCities.filter(city =>
-      city.toLowerCase().includes(inputState.city.toLowerCase())
+      city.toLowerCase().includes(city.toLowerCase())
     );
 
     // Clear existing options
@@ -75,7 +75,7 @@ export class ClassForm extends Component {
   }
 
   render() {
-    const { onSubmit } = this.props;
+    const { onSubmit, isFormSubmitted } = this.props;
     const { city, email, firstName, lastName } = this.props.stateData;
 
     return (
@@ -95,7 +95,7 @@ export class ClassForm extends Component {
             }}
           />
         </div>
-        <ErrorMessage message={firstNameErrorMessage} show={true} />
+        <ErrorMessage message={firstNameErrorMessage} show={isFormSubmitted} />
 
         {/* last name input */}
         <div className="input-wrap">
@@ -109,7 +109,7 @@ export class ClassForm extends Component {
             }
           />
         </div>
-        <ErrorMessage message={lastNameErrorMessage} show={true} />
+        <ErrorMessage message={lastNameErrorMessage} show={isFormSubmitted} />
 
         {/* Email Input */}
         <div className="input-wrap">
@@ -123,7 +123,7 @@ export class ClassForm extends Component {
             }
           />
         </div>
-        <ErrorMessage message={emailErrorMessage} show={true} />
+        <ErrorMessage message={emailErrorMessage} show={isFormSubmitted} />
 
         {/* City Input */}
         <div className="input-wrap">
@@ -142,7 +142,7 @@ export class ClassForm extends Component {
           />
           <datalist id="cities" />
         </div>
-        <ErrorMessage message={cityErrorMessage} show={true} />
+        <ErrorMessage message={cityErrorMessage} show={isFormSubmitted} />
 
         <div className="input-wrap">
           <label htmlFor="phone">Phone:</label>
@@ -199,7 +199,7 @@ export class ClassForm extends Component {
           </div>
         </div>
 
-        <ErrorMessage message={phoneNumberErrorMessage} show={true} />
+        <ErrorMessage message={phoneNumberErrorMessage} show={isFormSubmitted} />
 
         <input 
           type="submit" 
