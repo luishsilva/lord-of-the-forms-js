@@ -16,13 +16,9 @@ export class ClassForm extends Component {
 
   handleChange = (e) => {
     const { name, value } = e.target;
-    this.props.setStateMethod((prevState) => ({
-      ...prevState,
-      inputState: {
-        ...prevState.inputState,
-        [name]: value,
-      },
-    }), this.populateDatalist);
+    this.props.setStateMethod({
+      [name]: value,
+    }, this.populateDatalist);
   };
 
   populateDatalist = () => {
@@ -68,27 +64,19 @@ export class ClassForm extends Component {
     this.setState(prevState => {
       // Create a new array by spreading the previous refs
       const newRefs = [...prevState.refs];
-      
       newRefs[index].current.value = value.slice(0, currentMaxLength);
       return { refs: newRefs };
     });
     
-    this.props.setStateMethod((prevState) => {
-      const phoneValue = this.state.refs.map(ref => ref.current.value);
-    
-      return {
-        ...prevState,
-        inputState: {
-          ...prevState.inputState,
-          phone: phoneValue,
-        },
-      };
+    const phoneValue = this.state.refs.map(ref => ref.current.value);
+    this.props.setStateMethod({
+      phone: phoneValue,
     });
   }
 
   render() {
     const { onSubmit } = this.props;
-    const { city, email, firstName, lastName, phone } = this.props.stateData;
+    const { city, email, firstName, lastName } = this.props.stateData;
 
     return (
       <form onSubmit={onSubmit}>
