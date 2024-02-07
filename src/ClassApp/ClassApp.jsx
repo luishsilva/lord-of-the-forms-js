@@ -8,13 +8,11 @@ export class ClassApp extends Component {
 
   state = {
     isFormSubmitted: false,
-    inputState: {
-      city: "",
-      email: "",
-      firstName: "",
-      lastName: "",
-      phone: "",
-    }
+    city: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
   }
 
   setAppState = (newState) => {
@@ -23,7 +21,7 @@ export class ClassApp extends Component {
 
   onHandleSubmit = (e) => {
     e.preventDefault();
-    this.validadeForm(this.state.inputState)
+    this.validadeForm(this.state)
     this.setState(
       {isFormSubmitted: true}
     );
@@ -69,7 +67,7 @@ export class ClassApp extends Component {
   }
 
   render() {
-    const { email, firstName, lastName, phone, city, } = this.state.inputState;
+    const { email, firstName, lastName, phone, city, } = this.state;
     const { isFormSubmitted } = this.state;
     
     return (
