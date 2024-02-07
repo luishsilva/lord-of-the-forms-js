@@ -60,17 +60,17 @@ export class ClassForm extends Component {
         prevRef.current?.focus();
       }
     }
-      
-    this.setState(prevState => {
-      // Create a new array by spreading the previous refs
-      const newRefs = [...prevState.refs];
-      newRefs[index].current.value = value.slice(0, currentMaxLength);
-      return { refs: newRefs };
-    });
-    
-    const phoneValue = this.state.refs.map(ref => ref.current.value);
-    this.props.setStateMethod({
-      phone: phoneValue,
+
+    const newRefs = [...this.state.refs];
+    newRefs[index].current.value = value.slice(0, currentMaxLength);
+  
+    // Update the state with the new array of refs
+    this.setState({ refs: newRefs }, () => {
+      // After updating state, get the phone value and call setStateMethod
+      const phoneValue = this.state.refs.map((ref) => ref.current.value);
+      this.props.setStateMethod({
+        phone: phoneValue,
+      });
     });
   }
 
