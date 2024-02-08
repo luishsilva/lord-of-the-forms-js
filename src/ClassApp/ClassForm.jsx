@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { ErrorMessage } from "../ErrorMessage";
 import { TextInput } from "./components/TextInput";
-import { allowOnlyLetters } from "../utils/validations"
+import { allowOnlyLetters, allowOnlyNumbers } from "../utils/validations"
 
 const firstNameErrorMessage = "First name must be at least 2 characters long";
 const lastNameErrorMessage = "Last name must be at least 2 characters long";
@@ -42,25 +42,14 @@ export class ClassForm extends Component {
   };
 
   handlePhoneInputChange = (index) => (e) => {
-    const value = e.target.value;
+  
+    const value = allowOnlyNumbers(e.target.value);
     const lengths = [2, 2, 2, 1];
     const currentMaxLength = lengths[index];
     const nextRef = this.state.refs[index + 1];
     const prevRef = this.state.refs[index > 0 ? index - 1 : index];
     const shouldGoToNextRef = currentMaxLength === value.length;
     const shouldGoToPrevRef = value.length === 0;
-      
-    if (shouldGoToNextRef) {
-      if (nextRef !== undefined) {
-        nextRef.current?.focus();
-      }
-    }
-
-    if (shouldGoToPrevRef) {
-      if (prevRef !== undefined) {
-        prevRef.current?.focus();
-      }
-    }
 
     const newRefs = [...this.state.refs];
     newRefs[index].current.value = value.slice(0, currentMaxLength);
@@ -73,6 +62,20 @@ export class ClassForm extends Component {
         phone: phoneValue,
       });
     });
+
+    if (allowOnlyNumbers(e.target.value) ){
+      if (shouldGoToNextRef) {
+        if (nextRef !== undefined) {
+          nextRef.current?.focus();
+        }
+      }
+  
+      if (shouldGoToPrevRef) {
+        if (prevRef !== undefined) {
+          prevRef.current?.focus();
+        }
+      }
+    }
   }
 
   render() {

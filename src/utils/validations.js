@@ -7,7 +7,9 @@ export function isEmailValid(emailAddress) {
 export const isInputLenghtValid = (value, minLength) => ( value.length >= minLength );
 
 
-export const allowOnlyLetters = (input) => ( input.replace(/\d/g, '') );
+export const allowOnlyLetters = (input) => input.replace(/\d/g, '');
+
+export const allowOnlyNumbers = (input) => input.replace(/\D/g, '');
 
 export const isCityValid = (allCities, value) =>  {
   const lowerCaseArrayItems = allCities.map((city) => city.toLowerCase());
