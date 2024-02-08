@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { ClassForm } from "./ClassForm";
 import { ProfileInformation } from "../ProfileInformation";
-import { isEmailValid, isInputLenghtValid } from "../utils/validations"
+import { isEmailValid, isInputLenghtValid, isCityValid } from "../utils/validations"
 import { allCities } from "../utils/all-cities"
 
 export class ClassApp extends Component {
@@ -53,7 +53,7 @@ export class ClassApp extends Component {
             }
             break;
           case 'city':
-            if (allCities.includes(value)) {
+            if (isCityValid(allCities, value)) {
               console.log('City valid')
             } else {
               console.log('City not valid')
