@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { ErrorMessage } from "../ErrorMessage";
 import { TextInput } from "./components/TextInput";
+import { allowOnlyLetters } from "../utils/validations"
 
 const firstNameErrorMessage = "First name must be at least 2 characters long";
 const lastNameErrorMessage = "Last name must be at least 2 characters long";
@@ -17,7 +18,7 @@ export class ClassForm extends Component {
   handleChange = (e) => {
     const { name, value } = e.target;
     this.props.setStateMethod({
-      [name]: value,
+      [name]: allowOnlyLetters(value),
     }, this.populateDatalist);
   };
 
@@ -87,11 +88,11 @@ export class ClassForm extends Component {
         <div className="input-wrap">
           <TextInput 
             label="First Name"
-            value={firstName}
             inputProps={{
               placeholder:"First Name",
               name: "firstName",
-              onChange: this.handleChange
+              onChange: this.handleChange,
+              value: firstName
             }}
           />
         </div>
@@ -101,12 +102,12 @@ export class ClassForm extends Component {
         <div className="input-wrap">
           <TextInput 
             label="Last Name"
-            value={lastName}
             inputProps={{
               placeholder:"Last Name",
               name: "lastName",
-              onChange: this.handleChange}
-            }
+              onChange: this.handleChange,
+              value:lastName
+            }}
           />
         </div>
         <ErrorMessage message={lastNameErrorMessage} show={isFormSubmitted} />
@@ -115,12 +116,12 @@ export class ClassForm extends Component {
         <div className="input-wrap">
           <TextInput 
             label="Email"
-            value={email}
             inputProps={{
               placeholder:"Email",
               name: "email",
-              onChange: this.handleChange}
-            }
+              onChange: this.handleChange,
+              value:email
+            }}
           />
         </div>
         <ErrorMessage message={emailErrorMessage} show={isFormSubmitted} />
@@ -129,7 +130,6 @@ export class ClassForm extends Component {
         <div className="input-wrap">
           <TextInput 
             label="City"
-            value={city}
             inputProps={{
               placeholder:"Hobbiton",
               name: "city",
@@ -138,6 +138,7 @@ export class ClassForm extends Component {
                 this.handleChange(e);
                 this.populateDatalist();
               },
+              value:city
             }}
           />
           <datalist id="cities" />

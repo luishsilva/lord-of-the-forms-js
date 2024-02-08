@@ -58,21 +58,21 @@ Example Template:
 
 My recommendation is read through all the requirements once, then focus more on matching 👇 that UI. Then at the end use the checklist to make sure that you covered all of the UI and requirements, this checklist should make more sense as you start coding.
 
-- [ ] Get your code to function EXACTLY like [This Site](https://lord-of-the-forms.vercel.app/)
+- [ X ] Get your code to function EXACTLY like [This Site](https://lord-of-the-forms.vercel.app/)
 
 Validation UI
 
-- [ ] Under input errors should not show UNLESS the user has already tried submitting once
+- [ X ] Under input errors should not show UNLESS the user has already tried submitting once
 - [ ] Errors should go away as soon as the field is fixed, not on submit
 - [ ] If a user tries to submit a form with bad inputs, an alert message will say "Bad Inputs" then the exact errors will pop up under the incorrect inputs
 - [ ] When a user successfully submits the form, it should update the userInformation and show the user information in the ProfileInformation Component
-- [ ] First Name should be at least 2 characters long and should not contain numbers
-- [ ] Last Name should be at least 2 characters long and should not contain numbers
-- [ ] Email should pass the `isEmailValid` function
-- [ ] City should be valid according to the `City Information` section below
-  - [ ] You should have a `isCityValid` function located in `validations.ts` that returns true or false depending on the input
+- [ X ] First Name should be at least 2 characters long and should not contain numbers
+- [ X ] Last Name should be at least 2 characters long and should not contain numbers
+- [ X ] Email should pass the `isEmailValid` function
+- [ X ] City should be valid according to the `City Information` section below
+- [ X ] You should have a `isCityValid` function located in `validations.ts` that returns true or false depending on the input
 - [ ] Phone number should be 7 characters long, and every characters should be a number 0-9
-  - [ ] You should have a `isPhoneValid` function located in `validations.ts` that returns true or false depending on the input
+- [ ] You should have a `isPhoneValid` function located in `validations.ts` that returns true or false depending on the input
 
 Phone Number UI
 
