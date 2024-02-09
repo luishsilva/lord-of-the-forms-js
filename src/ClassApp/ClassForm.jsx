@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { ErrorMessage } from "../ErrorMessage";
 import { TextInput } from "./components/TextInput";
+import { PhoneInput } from "./components/PhoneInput";
 import { allowOnlyLetters, allowOnlyNumbers } from "../utils/validations"
 
 const firstNameErrorMessage = "First name must be at least 2 characters long";
@@ -147,58 +148,7 @@ export class ClassForm extends Component {
         <ErrorMessage message={cityErrorMessage} show={isFormSubmitted} />
 
         <div className="input-wrap">
-          <label htmlFor="phone">Phone:</label>
-          <div id="phone-input-wrap">
-            {/* Phone input 0 */}
-            <TextInput 
-              value={this.state.refs[0].current?.value}
-              inputProps={{
-                id: "phone-input-0",
-                placeholder:"55",
-                name: "phone-input-0",
-                onChange: this.handlePhoneInputChange(0),
-                ref: this.state.refs[0]
-              }}
-            />
-            -
-            {/* Phone input 1 */}
-            <TextInput 
-              value={this.state.refs[1].current?.value}
-              inputProps={{
-                id: "phone-input-1",
-                placeholder:"55",
-                name: "phone-input-1",
-                onChange: this.handlePhoneInputChange(1),
-                ref: this.state.refs[1]
-              }}
-            />
-            {/* <input type="text" id="phone-input-2" placeholder="55" /> */}
-            -
-            {/* Phone input 2 */}
-            <TextInput 
-              value={this.state.refs[2].current?.value}
-              inputProps={{
-                id: "phone-input-2",
-                placeholder:"55",
-                name: "phone-input-2",
-                onChange: this.handlePhoneInputChange(2),
-                ref: this.state.refs[2]
-              }}
-            />
-            {/* <input type="text" id="phone-input-3" placeholder="55" /> */}
-            -
-            <TextInput 
-              value={this.state.refs[3].current?.value}
-              inputProps={{
-                id: "phone-input-3",
-                placeholder:"55",
-                name: "phone-input-3",
-                onChange: this.handlePhoneInputChange(3),
-                ref: this.state.refs[3]
-              }}
-            />
-            {/* <input type="text" id="phone-input-4" placeholder="5" /> */}
-          </div>
+          <PhoneInput state={this.state} handlePhoneInputChange={this.handlePhoneInputChange} />
         </div>
 
         <ErrorMessage message={phoneNumberErrorMessage} show={isFormSubmitted} />

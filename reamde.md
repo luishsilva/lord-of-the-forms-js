@@ -82,8 +82,8 @@ Phone Number UI
 
 Phone Input
 
-- [ ] Create a `FunctionalPhoneInput` component to clean up code
-- [ ] Create a `ClassPhoneInput` component to clean up code
+- [ X ] Create a `FunctionalPhoneInput` component to clean up code
+- [ X ] Create a `ClassPhoneInput` component to clean up code
 - [ X ] The telephone input should work EXACTLY like on the example site
 - [ X ] Typing in the max characters on one input should move to the next input
 - [ X ] Deleting should go to the previous input as necessary
