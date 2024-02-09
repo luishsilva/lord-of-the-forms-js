@@ -42,7 +42,7 @@ export class ClassForm extends Component {
   };
 
   handlePhoneInputChange = (index) => (e) => {
-  
+    const inputType = e.nativeEvent.inputType;
     const value = allowOnlyNumbers(e.target.value);
     const lengths = [2, 2, 2, 1];
     const currentMaxLength = lengths[index];
@@ -63,17 +63,15 @@ export class ClassForm extends Component {
       });
     });
 
-    if (allowOnlyNumbers(e.target.value) ){
-      if (shouldGoToNextRef) {
-        if (nextRef !== undefined) {
-          nextRef.current?.focus();
-        }
+    if (shouldGoToNextRef) {
+      if (nextRef !== undefined) {
+        nextRef.current?.focus();
       }
-  
-      if (shouldGoToPrevRef) {
-        if (prevRef !== undefined) {
-          prevRef.current?.focus();
-        }
+    }
+
+    if (shouldGoToPrevRef  && inputType === 'deleteContentBackward') {
+      if (prevRef !== undefined) {
+        prevRef.current?.focus();
       }
     }
   }
