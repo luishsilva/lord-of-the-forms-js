@@ -23,9 +23,9 @@ export class ClassApp extends Component {
   onHandleSubmit = (e) => {
     e.preventDefault();
     this.validateForm(this.state)
-    this.setState(
-      {isFormSubmitted: true}
-    );
+    this.setState((prevState) => ({
+      isFormSubmitted: prevState.hasInputError.length > 0 ? true : false
+    }));
   }
 
   addError = (key) => {
@@ -91,55 +91,8 @@ export class ClassApp extends Component {
     }
   }
 
-  /* validadeForm = (formInputs) => {
-    if(formInputs != null){
-      Object.entries(formInputs).forEach(([key, value]) => {
-        switch (key) {
-          case 'firstName':
-            if (isInputLenghtValid(value,2)) {
-              this.removeErroFromState(key);
-            } else {
-              this.hasError(key);
-            }
-            break;
-          case 'lastName':
-            if (isInputLenghtValid(value,2)) {
-              this.removeErroFromState(key);
-            } else {
-              this.hasError(key);
-            }
-            break;
-          case 'email':
-            if (isEmailValid(value)) {
-              this.removeErroFromState(key);
-            } else {
-              this.hasError(key);
-            }
-            break;
-          case 'city':
-            if (isCityValid(allCities, value)) {
-              this.removeErroFromState(key);
-            } else {
-              this.hasError(key);
-            }
-            break;
-          case 'phone':
-            if (isPhoneValid(value)) {
-              this.removeErroFromState(key);
-            } else {
-              this.hasError(key);
-            }
-            break;
-          default:
-            break;
-        }
-      });
-    }
-  } */
-
   render() {
-    const { email, firstName, lastName, phone, city, hasInputError } = this.state;
-    const { isFormSubmitted } = this.state;
+    const { email, firstName, lastName, phone, city } = this.state;
 
     return (
       <>
@@ -153,7 +106,6 @@ export class ClassApp extends Component {
         />
         <ClassForm 
           allCities={allCities}
-          isFormSubmitted={isFormSubmitted}
           onSubmit={this.onHandleSubmit}
           stateData={this.state}
           setStateMethod={this.setAppState}
