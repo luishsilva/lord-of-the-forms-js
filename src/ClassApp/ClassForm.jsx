@@ -78,9 +78,9 @@ export class ClassForm extends Component {
   }
 
   render() {
-    const { onSubmit, isFormSubmitted } = this.props;
-    const { city, email, firstName, lastName } = this.props.stateData;
-
+    const { onSubmit, } = this.props;
+    const { city, email, firstName, lastName, isFormSubmitted, hasInputError } = this.props.stateData;
+    
     return (
       <form onSubmit={onSubmit}>
         <u>
@@ -98,7 +98,7 @@ export class ClassForm extends Component {
             }}
           />
         </div>
-        <ErrorMessage message={firstNameErrorMessage} show={isFormSubmitted} />
+        <ErrorMessage message={firstNameErrorMessage} show={isFormSubmitted && hasInputError.includes('firstName')} />
 
         {/* last name input */}
         <div className="input-wrap">
@@ -112,7 +112,7 @@ export class ClassForm extends Component {
             }}
           />
         </div>
-        <ErrorMessage message={lastNameErrorMessage} show={isFormSubmitted} />
+        <ErrorMessage message={lastNameErrorMessage} show={isFormSubmitted && hasInputError.includes('lastName')} />
 
         {/* Email Input */}
         <div className="input-wrap">
@@ -126,7 +126,7 @@ export class ClassForm extends Component {
             }}
           />
         </div>
-        <ErrorMessage message={emailErrorMessage} show={isFormSubmitted} />
+        <ErrorMessage message={emailErrorMessage} show={isFormSubmitted && hasInputError.includes('email')} />
 
         {/* City Input */}
         <div className="input-wrap">
@@ -145,13 +145,13 @@ export class ClassForm extends Component {
           />
           <datalist id="cities" />
         </div>
-        <ErrorMessage message={cityErrorMessage} show={isFormSubmitted} />
+        <ErrorMessage message={cityErrorMessage} show={isFormSubmitted && hasInputError.includes('city')} />
 
         <div className="input-wrap">
           <PhoneInput state={this.state} handlePhoneInputChange={this.handlePhoneInputChange} />
         </div>
 
-        <ErrorMessage message={phoneNumberErrorMessage} show={isFormSubmitted} />
+        <ErrorMessage message={phoneNumberErrorMessage} show={isFormSubmitted && hasInputError.includes('phone')} />
 
         <input 
           type="submit" 
