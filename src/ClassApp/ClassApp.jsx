@@ -17,15 +17,18 @@ export class ClassApp extends Component {
   }
 
   setAppState = (newState) => {
+    const key = Object.keys(newState)[0];
+    const value = newState[key];
+    this.validateInput(key,value)
     this.setState(newState);
   }
 
   onHandleSubmit = (e) => {
     e.preventDefault();
-    this.validateForm(this.state)
-    this.setState((prevState) => ({
-      isFormSubmitted: prevState.hasInputError.length > 0 ? true : false
-    }));
+    this.validateFormSubmite(this.state)
+    this.setState({
+      isFormSubmitted: true
+    });
   }
 
   addError = (key) => {
@@ -51,64 +54,70 @@ export class ClassApp extends Component {
     });
   };
 
-  validateForm = (formInputs) => {
+  validateInput = (key, value) => {
+    switch (key) {
+      case 'firstName':
+      case 'lastName':
+        if (isInputLenghtValid(value, 2)) {
+          this.removeError(key);
+        } else {
+          this.addError(key);
+        }
+        break;
+      case 'email':
+        if (isEmailValid(value)) {
+          this.removeError(key);
+        } else {
+          this.addError(key);
+        }
+        break;
+      case 'city':
+        if (isCityValid(allCities, value)) {
+          this.removeError(key);
+        } else {
+          this.addError(key);
+        }
+        break;
+      case 'phone':
+        if (isPhoneValid(value)) {
+          this.removeError(key);
+        } else {
+          this.addError(key);
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  validateFormSubmite = (formInputs) => {
     if (formInputs && typeof formInputs === 'object') {
       Object.entries(formInputs).forEach(([key, value]) => {
-        switch (key) {
-          case 'firstName':
-          case 'lastName':
-            if (isInputLenghtValid(value, 2)) {
-              this.removeError(key);
-            } else {
-              this.addError(key);
-            }
-            break;
-          case 'email':
-            if (isEmailValid(value)) {
-              this.removeError(key);
-            } else {
-              this.addError(key);
-            }
-            break;
-          case 'city':
-            if (isCityValid(allCities, value)) {
-              this.removeError(key);
-            } else {
-              this.addError(key);
-            }
-            break;
-          case 'phone':
-            if (isPhoneValid(value)) {
-              this.removeError(key);
-            } else {
-              this.addError(key);
-            }
-            break;
-          default:
-            break;
-        }
+        this.validateInput(key, value)
       });
     }
   }
 
   render() {
-    const { email, firstName, lastName, phone, city } = this.state;
+    const { email, firstName, lastName, phone, city, isFormSubmitted } = this.state;
 
     return (
       <>
         <h2>Class</h2>
-        <ProfileInformation
+        {isFormSubmitted && <ProfileInformation
           userData={
             // toggle the following lines to change
             // null
             { email, firstName, lastName, phone, city, }
           }
-        />
+        />}
         <ClassForm 
           allCities={allCities}
           onSubmit={this.onHandleSubmit}
           stateData={this.state}
           setStateMethod={this.setAppState}
+          addError={this.addError}
+          removeError={this.removeError}
         />
       </>
     );
