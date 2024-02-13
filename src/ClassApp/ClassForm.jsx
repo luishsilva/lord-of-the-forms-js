@@ -13,10 +13,10 @@ const phoneNumberErrorMessage = "Invalid Phone Number";
 export class ClassForm extends Component {
 
   state = {
-    refs: [React.createRef(), React.createRef(), React.createRef(), React.createRef(), ]
+    refs: [React.createRef(), React.createRef(), React.createRef(), React.createRef(),],
   }
 
-  handleChange = (e) => {
+  onChange = (e) => {
     const { name, value } = e.target;
     this.props.setStateMethod({
       [name]: allowOnlyLetters(value),
@@ -42,7 +42,7 @@ export class ClassForm extends Component {
     });
   };
 
-  handlePhoneInputChange = (index) => (e) => {
+  onPhoneChange = (index) => (e) => {
     const inputType = e.nativeEvent.inputType;
     const value = allowOnlyNumbers(e.target.value);
     const lengths = [2, 2, 2, 1];
@@ -80,7 +80,7 @@ export class ClassForm extends Component {
   render() {
     const { onSubmit, } = this.props;
     const { city, email, firstName, lastName, isFormSubmitted, hasInputError } = this.props.stateData;
-    
+
     return (
       <form onSubmit={onSubmit}>
         <u>
@@ -93,12 +93,12 @@ export class ClassForm extends Component {
             inputProps={{
               placeholder:"First Name",
               name: "firstName",
-              onChange: this.handleChange,
+              onChange: this.onChange,
               value: firstName
             }}
           />
         </div>
-        <ErrorMessage message={firstNameErrorMessage} show={isFormSubmitted && hasInputError.includes('firstName')} />
+        <ErrorMessage message={firstNameErrorMessage} show={ (isFormSubmitted && hasInputError.includes('firstName'))} />
 
         {/* last name input */}
         <div className="input-wrap">
@@ -107,7 +107,7 @@ export class ClassForm extends Component {
             inputProps={{
               placeholder:"Last Name",
               name: "lastName",
-              onChange: this.handleChange,
+              onChange: this.onChange,
               value:lastName
             }}
           />
@@ -121,7 +121,7 @@ export class ClassForm extends Component {
             inputProps={{
               placeholder:"Email",
               name: "email",
-              onChange: this.handleChange,
+              onChange: this.onChange,
               value:email
             }}
           />
@@ -137,7 +137,7 @@ export class ClassForm extends Component {
               name: "city",
               list: "cities",
               onChange: (e) => {
-                this.handleChange(e);
+                this.onChange(e);
                 this.populateDatalist();
               },
               value:city
@@ -148,7 +148,7 @@ export class ClassForm extends Component {
         <ErrorMessage message={cityErrorMessage} show={isFormSubmitted && hasInputError.includes('city')} />
 
         <div className="input-wrap">
-          <PhoneInput state={this.state} handlePhoneInputChange={this.handlePhoneInputChange} />
+          <PhoneInput state={this.state} onPhoneChange={this.onPhoneChange} />
         </div>
 
         <ErrorMessage message={phoneNumberErrorMessage} show={isFormSubmitted && hasInputError.includes('phone')} />

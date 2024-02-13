@@ -1,6 +1,6 @@
 import { TextInput } from "./TextInput"
 
-export const PhoneInput = ( {state, handlePhoneInputChange }) => (
+export const PhoneInput = ( {state, onPhoneChange }) => (
     <>
         <label htmlFor="phone">Phone:</label>
         <div id="phone-input-wrap">
@@ -10,7 +10,7 @@ export const PhoneInput = ( {state, handlePhoneInputChange }) => (
                 id: "phone-input-0",
                 placeholder:"55",
                 name: "phone-input-0",
-                onChange: handlePhoneInputChange(0),
+                onChange: onPhoneChange(0),
                 ref: state.refs[0]
                 }}
             />
@@ -21,7 +21,7 @@ export const PhoneInput = ( {state, handlePhoneInputChange }) => (
                 id: "phone-input-1",
                 placeholder:"55",
                 name: "phone-input-1",
-                onChange: handlePhoneInputChange(1),
+                onChange: onPhoneChange(1),
                 ref: state.refs[1]
                 }}
             />
@@ -32,7 +32,7 @@ export const PhoneInput = ( {state, handlePhoneInputChange }) => (
                 id: "phone-input-2",
                 placeholder:"55",
                 name: "phone-input-2",
-                onChange: handlePhoneInputChange(2),
+                onChange: onPhoneChange(2),
                 ref: state.refs[2]
                 }}
             />
@@ -43,7 +43,7 @@ export const PhoneInput = ( {state, handlePhoneInputChange }) => (
                 id: "phone-input-3",
                 placeholder:"55",
                 name: "phone-input-3",
-                onChange: handlePhoneInputChange(3),
+                onChange: onPhoneChange(3),
                 ref: state.refs[3]
                 }}
             />
