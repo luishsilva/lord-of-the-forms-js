@@ -104,7 +104,7 @@ export class ClassApp extends Component {
     return (
       <>
         <h2>Class</h2>
-        {isFormSubmitted && <ProfileInformation
+        {isFormSubmitted && this.state.hasInputError.length === 0 && <ProfileInformation
           userData={
             // toggle the following lines to change
             // null

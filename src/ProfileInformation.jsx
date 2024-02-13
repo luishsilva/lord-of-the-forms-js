@@ -1,3 +1,5 @@
+import { formatPhoneNumber } from './utils/transformations';
+
 export const InfoRow = ({ label, value }) => {
   return (
     <div>
@@ -34,7 +36,7 @@ export const ProfileInformation = ({ userData }) => {
         <InfoRow label="Last Name" value={lastName} />
         <InfoRow label="City" value={city} />
         {/* You will need to format the string "nnnnnnn" as "nn-nn-nn-n" */}
-        <InfoRow label="Phone" value={phone} />
+        <InfoRow label="Phone" value={formatPhoneNumber(phone)} />
       </div>
     </>
   );
