@@ -13,7 +13,8 @@ export class ClassApp extends Component {
     firstName: "",
     lastName: "",
     phone: "",
-    hasInputError: []
+    hasInputError: [],
+    showProfileInformation: false
   }
 
   setAppState = (newState) => {
@@ -25,10 +26,11 @@ export class ClassApp extends Component {
 
   onHandleSubmit = (e) => {
     e.preventDefault();
-    this.validateFormSubmite(this.state)
-    this.setState({
-      isFormSubmitted: true
-    });
+    this.validateFormSubmit(this.state);
+    this.setState((prevState) => ({
+      isFormSubmitted: true,
+      showProfileInformation: prevState.hasInputError.length === 0 
+    }));
   }
 
   addError = (key) => {
@@ -90,7 +92,7 @@ export class ClassApp extends Component {
     }
   }
 
-  validateFormSubmite = (formInputs) => {
+  validateFormSubmit = (formInputs) => {
     if (formInputs && typeof formInputs === 'object') {
       Object.entries(formInputs).forEach(([key, value]) => {
         this.validateInput(key, value)
@@ -99,12 +101,12 @@ export class ClassApp extends Component {
   }
 
   render() {
-    const { email, firstName, lastName, phone, city, isFormSubmitted } = this.state;
+    const { email, firstName, lastName, phone, city, showProfileInformation } = this.state;
 
     return (
       <>
         <h2>Class</h2>
-        {isFormSubmitted && this.state.hasInputError.length === 0 && <ProfileInformation
+        {showProfileInformation && <ProfileInformation
           userData={
             // toggle the following lines to change
             // null
