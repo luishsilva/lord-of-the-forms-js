@@ -65,7 +65,7 @@ Validation UI
 - [ X ] Under input errors should not show UNLESS the user has already tried submitting once
 - [ ] Errors should go away as soon as the field is fixed, not on submit
 - [ ] If a user tries to submit a form with bad inputs, an alert message will say "Bad Inputs" then the exact errors will pop up under the incorrect inputs
-- [ ] When a user successfully submits the form, it should update the userInformation and show the user information in the ProfileInformation Component
+- [ X ] When a user successfully submits the form, it should update the userInformation and show the user information in the ProfileInformation Component
 - [ X ] First Name should be at least 2 characters long and should not contain numbers
 - [ X ] Last Name should be at least 2 characters long and should not contain numbers
 - [ X ] Email should pass the `isEmailValid` function
@@ -77,8 +77,8 @@ Validation UI
 Phone Number UI
 
 - [ X ] When you store a phone number in state it should NOT have all the `-` characters in what you are storing
-- [ ] Display a phone number with the format `NN-NN-NN-N`
-  - use this function in your `ProfileInformation` component to render the correct thing to the screen
+- [ X ] Display a phone number with the format `NN-NN-NN-N`
+- [ X ]use this function in your `ProfileInformation` component to render the correct thing to the screen
 
 Phone Input
 

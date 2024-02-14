@@ -108,18 +108,13 @@ export class ClassApp extends Component {
         <h2>Class</h2>
         {showProfileInformation && <ProfileInformation
           userData={
-            // toggle the following lines to change
-            // null
             { email, firstName, lastName, phone, city, }
           }
         />}
         <ClassForm 
-          allCities={allCities}
           onSubmit={this.onHandleSubmit}
           stateData={this.state}
           setStateMethod={this.setAppState}
-          addError={this.addError}
-          removeError={this.removeError}
         />
       </>
     );
