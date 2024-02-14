@@ -24,7 +24,7 @@ export class ClassApp extends Component {
     this.setState(newState);
   }
 
-  onHandleSubmit = (e) => {
+  onSubmit = (e) => {
     e.preventDefault();
     this.validateFormSubmit(this.state);
     this.setState((prevState) => ({
@@ -112,7 +112,7 @@ export class ClassApp extends Component {
           }
         />}
         <ClassForm 
-          onSubmit={this.onHandleSubmit}
+          onSubmit={this.onSubmit}
           stateData={this.state}
           setStateMethod={this.setAppState}
         />
