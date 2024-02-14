@@ -3,6 +3,7 @@ import { ErrorMessage } from "../ErrorMessage";
 import { TextInput } from "./components/TextInput";
 import { PhoneInput } from "./components/PhoneInput";
 import { allowOnlyLetters, allowOnlyNumbers } from "../utils/validations"
+import { allCities } from "../utils/all-cities"
 
 const firstNameErrorMessage = "First name must be at least 2 characters long";
 const lastNameErrorMessage = "Last name must be at least 2 characters long";
@@ -24,8 +25,6 @@ export class ClassForm extends Component {
   };
 
   populateDatalist = () => {
-    const { allCities, stateData:{city} } = this.props;
-
     const datalist = document.getElementById('cities');
     const filteredCities = allCities.filter(city =>
       city.toLowerCase().includes(city.toLowerCase())
