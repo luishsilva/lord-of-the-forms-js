@@ -14,7 +14,7 @@ export class ClassApp extends Component {
     lastName: "",
     phone: "",
     hasInputError: [],
-    showProfileInformation: false
+    showProfileInformation: false,
   }
 
   setAppState = (newState) => {
@@ -31,6 +31,7 @@ export class ClassApp extends Component {
       isFormSubmitted: true,
       showProfileInformation: prevState.hasInputError.length === 0 
     }));
+    //const hasErrors = this.state.hasInputError.length > 0;
   }
 
   addError = (key) => {
@@ -40,7 +41,7 @@ export class ClassApp extends Component {
           hasInputError: [...prevState.hasInputError, key],
         };
       }
-      return null;
+      return prevState;
     });
   };
 
@@ -52,7 +53,7 @@ export class ClassApp extends Component {
           hasInputError: filteredErrors,
         };
       }
-      return null;
+      return prevState;
     });
   };
 
@@ -106,11 +107,12 @@ export class ClassApp extends Component {
     return (
       <>
         <h2>Class</h2>
-        {showProfileInformation && <ProfileInformation
+        <ProfileInformation
           userData={
             { email, firstName, lastName, phone, city, }
           }
-        />}
+          showProfileInformation={showProfileInformation}
+        />
         <ClassForm 
           onSubmit={this.onSubmit}
           stateData={this.state}

@@ -10,8 +10,8 @@ export const InfoRow = ({ label, value }) => {
     </div>
   );
 };
-export const ProfileInformation = ({ userData }) => {
-  if (!userData) {
+export const ProfileInformation = ({ userData, showProfileInformation }) => {
+  if (!showProfileInformation) {
     return (
       <>
         <u>

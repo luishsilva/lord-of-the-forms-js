@@ -63,7 +63,7 @@ My recommendation is read through all the requirements once, then focus more on 
 Validation UI
 
 - [ X ] Under input errors should not show UNLESS the user has already tried submitting once
-- [ ] Errors should go away as soon as the field is fixed, not on submit
+- [ X ] Errors should go away as soon as the field is fixed, not on submit
 - [ ] If a user tries to submit a form with bad inputs, an alert message will say "Bad Inputs" then the exact errors will pop up under the incorrect inputs
 - [ X ] When a user successfully submits the form, it should update the userInformation and show the user information in the ProfileInformation Component
 - [ X ] First Name should be at least 2 characters long and should not contain numbers
