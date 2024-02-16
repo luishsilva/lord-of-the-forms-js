@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { ErrorMessage } from "../ErrorMessage";
 import { TextInput } from "./components/TextInput";
 import { PhoneInput } from "./components/PhoneInput";
-import { allowOnlyLetters } from '../utils/validations'
+import { allowOnlyLetters , allowOnlyNumbers } from '../utils/validations'
 
 const firstNameErrorMessage = "First name must be at least 2 characters long";
 const lastNameErrorMessage = "Last name must be at least 2 characters long";
@@ -12,9 +12,10 @@ const phoneNumberErrorMessage = "Invalid Phone Number";
 
 export const FunctionalForm = ({ state, setState }) => {
   const { firstName, lastName, email, city, isFormSubmitted } = state;
-  const [stateRefs] = useState({
+  const [stateRefs, setStateRefs] = useState({
     refs: [useRef(), useRef(), useRef(), useRef()]
   });
+
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -29,21 +30,20 @@ export const FunctionalForm = ({ state, setState }) => {
     const value = allowOnlyNumbers(e.target.value);
     const lengths = [2, 2, 2, 1];
     const currentMaxLength = lengths[index];
-    const nextRef = this.state.refs[index + 1];
-    const prevRef = this.state.refs[index > 0 ? index - 1 : index];
+    const nextRef = stateRefs.refs[index + 1];
+    const prevRef = stateRefs.refs[index > 0 ? index - 1 : index];
     const shouldGoToNextRef = currentMaxLength === value.length;
     const shouldGoToPrevRef = value.length === 0;
 
-    const newRefs = [...this.state.refs];
+    const newRefs = [...stateRefs.refs];
     newRefs[index].current.value = value.slice(0, currentMaxLength);
-  
-    // Update the state with the new array of refs
-    this.setState({ refs: newRefs }, () => {
-      // After updating state, get the phone value and call setStateMethod
-      const phoneValue = this.state.refs.map((ref) => ref.current.value);
-      this.props.setStateMethod({
-        phone: phoneValue,
-      });
+
+    setStateRefs(() => {
+      return { refs: newRefs };
+    });
+    const phoneValue = stateRefs.refs.map((ref) => ref.current?.value);
+    setState({
+      phone: phoneValue,
     });
 
     if (shouldGoToNextRef) {
@@ -120,7 +120,7 @@ export const FunctionalForm = ({ state, setState }) => {
       <ErrorMessage message={cityErrorMessage} show={isFormSubmitted} />
 
       <div className="input-wrap">
-        <PhoneInput onPhoneChange={onPhoneChange} state={stateRefs}/>
+        <PhoneInput onPhoneChange={onPhoneChange} state={stateRefs} />
       </div>
       <ErrorMessage message={phoneNumberErrorMessage} show={isFormSubmitted} />
 
