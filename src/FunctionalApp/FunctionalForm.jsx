@@ -1,4 +1,8 @@
+import React, { useRef, useState } from "react";
 import { ErrorMessage } from "../ErrorMessage";
+import { TextInput } from "./components/TextInput";
+import { PhoneInput } from "./components/PhoneInput";
+import { allowOnlyLetters } from '../utils/validations'
 
 const firstNameErrorMessage = "First name must be at least 2 characters long";
 const lastNameErrorMessage = "Last name must be at least 2 characters long";
@@ -6,7 +10,55 @@ const emailErrorMessage = "Email is Invalid";
 const cityErrorMessage = "State is Invalid";
 const phoneNumberErrorMessage = "Invalid Phone Number";
 
-export const FunctionalForm = () => {
+export const FunctionalForm = ({ state, setState }) => {
+  const { firstName, lastName, email, city, isFormSubmitted } = state;
+  const [stateRefs] = useState({
+    refs: [useRef(), useRef(), useRef(), useRef()]
+  });
+
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setState((prevState) => ({
+      ...prevState,
+      [name]: allowOnlyLetters(value),
+    }));
+  }
+
+  const onPhoneChange = (index) => (e) => {
+    const inputType = e.nativeEvent.inputType;
+    const value = allowOnlyNumbers(e.target.value);
+    const lengths = [2, 2, 2, 1];
+    const currentMaxLength = lengths[index];
+    const nextRef = this.state.refs[index + 1];
+    const prevRef = this.state.refs[index > 0 ? index - 1 : index];
+    const shouldGoToNextRef = currentMaxLength === value.length;
+    const shouldGoToPrevRef = value.length === 0;
+
+    const newRefs = [...this.state.refs];
+    newRefs[index].current.value = value.slice(0, currentMaxLength);
+  
+    // Update the state with the new array of refs
+    this.setState({ refs: newRefs }, () => {
+      // After updating state, get the phone value and call setStateMethod
+      const phoneValue = this.state.refs.map((ref) => ref.current.value);
+      this.props.setStateMethod({
+        phone: phoneValue,
+      });
+    });
+
+    if (shouldGoToNextRef) {
+      if (nextRef !== undefined) {
+        nextRef.current?.focus();
+      }
+    }
+
+    if (shouldGoToPrevRef  && inputType === 'deleteContentBackward') {
+      if (prevRef !== undefined) {
+        prevRef.current?.focus();
+      }
+    }
+  }
+
   return (
     <form>
       <u>
@@ -15,46 +67,62 @@ export const FunctionalForm = () => {
 
       {/* first name input */}
       <div className="input-wrap">
-        <label>{"First Name"}:</label>
-        <input placeholder="Bilbo" />
+        <TextInput 
+          label="First Name"
+          inputProps={{
+            placeholder:"First Name",
+            name: "firstName",
+            onChange: onChange,
+            value: firstName
+          }}
+        />
       </div>
-      <ErrorMessage message={firstNameErrorMessage} show={true} />
+      <ErrorMessage message={firstNameErrorMessage} show={isFormSubmitted} />
 
       {/* last name input */}
       <div className="input-wrap">
-        <label>{"Last Name"}:</label>
-        <input placeholder="Baggins" />
+        <TextInput 
+          label="Last Name"
+          inputProps={{
+            placeholder:"Last Name",
+            name: "lastName",
+            onChange: onChange,
+            value: lastName
+          }}
+        />
       </div>
-      <ErrorMessage message={lastNameErrorMessage} show={true} />
-
-      {/* Email Input */}
-      <div className="input-wrap">
-        <label>{"Email"}:</label>
-        <input placeholder="bilbo-baggins@adventurehobbits.net" />
-      </div>
-      <ErrorMessage message={emailErrorMessage} show={true} />
-
-      {/* City Input */}
-      <div className="input-wrap">
-        <label>{"City"}:</label>
-        <input placeholder="Hobbiton" />
-      </div>
-      <ErrorMessage message={cityErrorMessage} show={true} />
+      <ErrorMessage message={lastNameErrorMessage} show={isFormSubmitted} />
 
       <div className="input-wrap">
-        <label htmlFor="phone">Phone:</label>
-        <div id="phone-input-wrap">
-          <input type="text" id="phone-input-0" placeholder="55" />
-          -
-          <input type="text" id="phone-input-1" placeholder="55" />
-          -
-          <input type="text" id="phone-input-2" placeholder="55" />
-          -
-          <input type="text" id="phone-input-3" placeholder="5" />
-        </div>
+        <TextInput 
+          label="Email"
+          inputProps={{
+            placeholder:"exemplo@email.com",
+            name: "email",
+            onChange: onChange,
+            value: email
+          }}
+        />
       </div>
+      <ErrorMessage message={emailErrorMessage} show={isFormSubmitted} />
 
-      <ErrorMessage message={phoneNumberErrorMessage} show={true} />
+      <div className="input-wrap">
+        <TextInput 
+          label="City"
+          inputProps={{
+            placeholder:"City",
+            name: "city",
+            onChange: onChange,
+            value: city
+          }}
+        />
+      </div>
+      <ErrorMessage message={cityErrorMessage} show={isFormSubmitted} />
+
+      <div className="input-wrap">
+        <PhoneInput onPhoneChange={onPhoneChange} state={stateRefs}/>
+      </div>
+      <ErrorMessage message={phoneNumberErrorMessage} show={isFormSubmitted} />
 
       <input type="submit" value="Submit" />
     </form>
