@@ -31,7 +31,6 @@ export class ClassApp extends Component {
       isFormSubmitted: true,
       showProfileInformation: prevState.hasInputError.length === 0 
     }));
-    //const hasErrors = this.state.hasInputError.length > 0;
   }
 
   addError = (key) => {
