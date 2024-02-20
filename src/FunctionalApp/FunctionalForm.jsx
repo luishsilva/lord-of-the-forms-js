@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { ErrorMessage } from "../ErrorMessage";
 import { TextInput } from "./components/TextInput";
 import { PhoneInput } from "./components/PhoneInput";

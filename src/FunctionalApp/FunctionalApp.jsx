@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ProfileInformation } from "../ProfileInformation";
 import { FunctionalForm } from "./FunctionalForm";
 import { isEmailValid, isInputLengthValid, isCityValid, isPhoneValid } from "../utils/validations";
