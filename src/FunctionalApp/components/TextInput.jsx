@@ -6,7 +6,6 @@ return (
         <input 
             type="text"
             {...inputProps}
-            //value={inputProps.value !== undefined ? inputProps.value : ''}
         />
     </>
 );
