@@ -23,7 +23,7 @@ export const ProfileInformation = ({ userData, showProfileInformation }) => {
       </>
     );
   }
-  // eslint-disable-next-line no-unused-vars
+
   const { email, firstName, lastName, phone, city } = userData;
   return (
     <>
