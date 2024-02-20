@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { ClassForm } from "./ClassForm";
 import { ProfileInformation } from "../ProfileInformation";
-import { isEmailValid, isInputLenghtValid, isCityValid, isPhoneValid } from "../utils/validations"
+import { isEmailValid, isInputLengthValid, isCityValid, isPhoneValid } from "../utils/validations"
 import { allCities } from "../utils/all-cities"
 
 export class ClassApp extends Component {
@@ -29,7 +29,7 @@ export class ClassApp extends Component {
     this.validateFormSubmit(this.state);
     this.setState((prevState) => ({
       isFormSubmitted: true,
-      showProfileInformation: prevState.hasInputError.length === 0 
+      showProfileInformation: prevState.hasInputError?.length === 0 
     }));
   }
 
@@ -46,8 +46,8 @@ export class ClassApp extends Component {
 
   removeError = (key) => {
     this.setState((prevState) => {
-      const filteredErrors = prevState.hasInputError.filter((item) => item !== key);
-      if (filteredErrors.length !== prevState.hasInputError.length) {
+      const filteredErrors = prevState.hasInputError?.filter((item) => item !== key);
+      if (filteredErrors.length !== prevState.hasInputError?.length) {
         return {
           hasInputError: filteredErrors,
         };
@@ -60,7 +60,7 @@ export class ClassApp extends Component {
     switch (key) {
       case 'firstName':
       case 'lastName':
-        if (isInputLenghtValid(value, 2)) {
+        if (isInputLengthValid(value, 2)) {
           this.removeError(key);
         } else {
           this.addError(key);

@@ -17,9 +17,9 @@ function App() {
           <div className="left">
             <FunctionalApp />
           </div>
-          {/* <div className="right">
+          <div className="right">
             <ClassApp />
-          </div> */}
+          </div>
         </div>
       </div>
       <datalist id="cities">

@@ -4,7 +4,10 @@ export function isEmailValid(emailAddress) {
   return !!emailAddress.match(regex);
 }
 
-export const isInputLenghtValid = (value, minLength) => value.length >= minLength;
+//export const isInputLenghtValid = (value, minLength) => value.length >= minLength;
+export const isInputLengthValid = (value, minLength) => {
+  return value !== undefined && value.length >= minLength;
+};
 
 
 export const allowOnlyLetters = (value) => value.replace(/\d/g, '');

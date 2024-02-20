@@ -40,16 +40,16 @@ To get this project setup, you should:
 
 ## Standard Requirements
 
-- [ ] Setup eslint
+- [ X ] Setup eslint
 - [ ] Pass all linting checks
 
 - To check if linting passes, run `npm run lint`
 
 - [ ] Format code with prettier
-- [ ] State should not be duplicated
-- [ ] Variables should be named logically
-- [ ] No unnecessary console logs
-- [ ] No commented out blocks of code (Code comments are fine)
+- [ X ] State should not be duplicated
+- [ X ] Variables should be named logically
+- [ X ] No unnecessary console logs
+- [ X ] No commented out blocks of code (Code comments are fine)
 - [ ] Setup a github repository with your submission as the `main` branch, you will submit a link to this for grading (NOT A ZIP FILE)
 
 ## Assignment Specific Requirements
@@ -98,21 +98,21 @@ City Information
 
 Text Inputs
 
-- [ ] Create a `FunctionalTextInput` component that groups the label and the input together
-- [ ] Create a `ClassTextInput` component to clean up code
+- [ X ] Create a `FunctionalTextInput` component that groups the label and the input together
+- [ X ] Create a `ClassTextInput` component to clean up code
 
 Form
 
 - [ X ] Page must NOT reload after submitting
-- [ ] ClassApp Code and FunctionalApp Code should be treated as separate apps as far as state goes
+- [ X ] ClassApp Code and FunctionalApp Code should be treated as separate apps as far as state goes
 
 Profile Information Component
 
 - You can share this between the `FunctionalApp` and the `ClassApp`
 - build a `capitalize` function in `transformations.ts` to correctly display a first and last name
 
-- [ ] build a `formatPhone` function in `transformations.ts` that will turn "1234567" into "12-34-56-7"
-- [ ] use `capitalize` and `formatPHone` in the `ProfileInformation` component in order to format things appropriately
+- [ X ] build a `formatPhone` function in `transformations.ts` that will turn "1234567" into "12-34-56-7"
+- [ X ] use `capitalize` and `formatPHone` in the `ProfileInformation` component in order to format things appropriately
 
 Email Validations
 

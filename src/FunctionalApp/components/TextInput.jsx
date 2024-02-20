@@ -1,9 +1,13 @@
-export const TextInput = ({ label, inputProps }) => (
+export const TextInput = ({ label, inputProps }) => {
+
+return (
     <>
         {label && <label>{label}:</label>}
         <input 
             type="text"
-            {...inputProps} 
+            {...inputProps}
+            //value={inputProps.value !== undefined ? inputProps.value : ''}
         />
     </>
 );
+}

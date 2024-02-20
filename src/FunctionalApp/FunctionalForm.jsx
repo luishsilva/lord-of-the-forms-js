@@ -3,6 +3,7 @@ import { ErrorMessage } from "../ErrorMessage";
 import { TextInput } from "./components/TextInput";
 import { PhoneInput } from "./components/PhoneInput";
 import { allowOnlyLetters , allowOnlyNumbers } from '../utils/validations'
+import { allCities } from "../utils/all-cities"
 
 const firstNameErrorMessage = "First name must be at least 2 characters long";
 const lastNameErrorMessage = "Last name must be at least 2 characters long";
@@ -10,20 +11,16 @@ const emailErrorMessage = "Email is Invalid";
 const cityErrorMessage = "State is Invalid";
 const phoneNumberErrorMessage = "Invalid Phone Number";
 
-export const FunctionalForm = ({ state, setState }) => {
-  const { firstName, lastName, email, city, isFormSubmitted } = state;
+export const FunctionalForm = ({ state, updateState, onSubmit }) => {
+  const { firstName, lastName, email, city, isFormSubmitted, hasInputError } = state;
   const [stateRefs, setStateRefs] = useState({
     refs: [useRef(), useRef(), useRef(), useRef()]
   });
 
-
   const onChange = (e) => {
     const { name, value } = e.target;
-    setState((prevState) => ({
-      ...prevState,
-      [name]: allowOnlyLetters(value),
-    }));
-  }
+    updateState(name, allowOnlyLetters(value));
+  };
 
   const onPhoneChange = (index) => (e) => {
     const inputType = e.nativeEvent.inputType;
@@ -37,14 +34,12 @@ export const FunctionalForm = ({ state, setState }) => {
 
     const newRefs = [...stateRefs.refs];
     newRefs[index].current.value = value.slice(0, currentMaxLength);
-
     setStateRefs(() => {
       return { refs: newRefs };
     });
+
     const phoneValue = stateRefs.refs.map((ref) => ref.current?.value);
-    setState({
-      phone: phoneValue,
-    });
+    updateState('phone', phoneValue)
 
     if (shouldGoToNextRef) {
       if (nextRef !== undefined) {
@@ -58,6 +53,23 @@ export const FunctionalForm = ({ state, setState }) => {
       }
     }
   }
+
+  const populateDatalist = () => {
+    const datalist = document.getElementById('cities');
+    const filteredCities = allCities.filter(city =>
+      city.toLowerCase().includes(city.toLowerCase())
+    );
+
+    // Clear existing options
+    datalist.innerHTML = '';
+
+    // Populate datalist with filtered cities
+    filteredCities.forEach(city => {
+      const option = document.createElement('option');
+      option.value = city;
+      datalist.appendChild(option);
+    });
+  };
 
   return (
     <form>
@@ -77,7 +89,7 @@ export const FunctionalForm = ({ state, setState }) => {
           }}
         />
       </div>
-      <ErrorMessage message={firstNameErrorMessage} show={isFormSubmitted} />
+      <ErrorMessage message={firstNameErrorMessage} show={(isFormSubmitted && hasInputError.includes('firstName'))} />
 
       {/* last name input */}
       <div className="input-wrap">
@@ -90,8 +102,8 @@ export const FunctionalForm = ({ state, setState }) => {
             value: lastName
           }}
         />
-      </div>
-      <ErrorMessage message={lastNameErrorMessage} show={isFormSubmitted} />
+      </div> 
+      <ErrorMessage message={lastNameErrorMessage} show={(isFormSubmitted && hasInputError.includes('lastName'))} />
 
       <div className="input-wrap">
         <TextInput 
@@ -103,8 +115,8 @@ export const FunctionalForm = ({ state, setState }) => {
             value: email
           }}
         />
-      </div>
-      <ErrorMessage message={emailErrorMessage} show={isFormSubmitted} />
+      </div> 
+      <ErrorMessage message={emailErrorMessage} show={(isFormSubmitted && hasInputError.includes('email'))} />
 
       <div className="input-wrap">
         <TextInput 
@@ -112,19 +124,24 @@ export const FunctionalForm = ({ state, setState }) => {
           inputProps={{
             placeholder:"City",
             name: "city",
-            onChange: onChange,
-            value: city
+            onChange: (e) => {
+              onChange(e),
+              populateDatalist()
+            },
+            value: city,
+            list: "cities",
           }}
         />
-      </div>
-      <ErrorMessage message={cityErrorMessage} show={isFormSubmitted} />
+        <datalist id="cities" />
+      </div> 
+      <ErrorMessage message={cityErrorMessage} show={(isFormSubmitted && hasInputError.includes('city'))} />
 
       <div className="input-wrap">
         <PhoneInput onPhoneChange={onPhoneChange} state={stateRefs} />
       </div>
-      <ErrorMessage message={phoneNumberErrorMessage} show={isFormSubmitted} />
+      <ErrorMessage message={phoneNumberErrorMessage} show={(isFormSubmitted && hasInputError.includes('phone'))} />
 
-      <input type="submit" value="Submit" />
+      <input type="submit" value="Submit" onClick={onSubmit}/>
     </form>
   );
 };
