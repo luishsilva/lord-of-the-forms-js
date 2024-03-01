@@ -40,7 +40,7 @@ To get this project setup, you should:
 
 ## Standard Requirements
 
-- [ X ] Setup eslint
+- [ ] Setup eslint
 - [ ] Pass all linting checks
 
 - To check if linting passes, run `npm run lint`

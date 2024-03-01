@@ -11,8 +11,8 @@ const emailErrorMessage = "Email is Invalid";
 const cityErrorMessage = "State is Invalid";
 const phoneNumberErrorMessage = "Invalid Phone Number";
 
-export const FunctionalForm = ({ state, updateState, onSubmit }) => {
-  const { firstName, lastName, email, city, isFormSubmitted, hasInputError } = state;
+export const FunctionalForm = ({ isFormSubmitted, formInputValues, updateState, onSubmit, formInputValidate }) => {
+  const { firstName, lastName, email, city, phone } = formInputValues;
   const [stateRefs, setStateRefs] = useState({
     refs: [useRef(), useRef(), useRef(), useRef()]
   });
@@ -89,7 +89,7 @@ export const FunctionalForm = ({ state, updateState, onSubmit }) => {
           }}
         />
       </div>
-      <ErrorMessage message={firstNameErrorMessage} show={(isFormSubmitted && hasInputError.includes('firstName'))} />
+      <ErrorMessage message={firstNameErrorMessage} show={(isFormSubmitted && !formInputValidate.firstName)} />
 
       {/* last name input */}
       <div className="input-wrap">
@@ -103,7 +103,7 @@ export const FunctionalForm = ({ state, updateState, onSubmit }) => {
           }}
         />
       </div> 
-      <ErrorMessage message={lastNameErrorMessage} show={(isFormSubmitted && hasInputError.includes('lastName'))} />
+      <ErrorMessage message={lastNameErrorMessage} show={(isFormSubmitted && !formInputValidate.lastName)} />
 
       <div className="input-wrap">
         <TextInput 
@@ -116,7 +116,7 @@ export const FunctionalForm = ({ state, updateState, onSubmit }) => {
           }}
         />
       </div> 
-      <ErrorMessage message={emailErrorMessage} show={(isFormSubmitted && hasInputError.includes('email'))} />
+      <ErrorMessage message={emailErrorMessage} show={(isFormSubmitted && !formInputValidate.email)} />
 
       <div className="input-wrap">
         <TextInput 
@@ -134,12 +134,12 @@ export const FunctionalForm = ({ state, updateState, onSubmit }) => {
         />
         <datalist id="cities" />
       </div> 
-      <ErrorMessage message={cityErrorMessage} show={(isFormSubmitted && hasInputError.includes('city'))} />
+      <ErrorMessage message={cityErrorMessage} show={(isFormSubmitted && !formInputValidate.city)} />
 
       <div className="input-wrap">
         <PhoneInput onPhoneChange={onPhoneChange} state={stateRefs} />
       </div>
-      <ErrorMessage message={phoneNumberErrorMessage} show={(isFormSubmitted && hasInputError.includes('phone'))} />
+      <ErrorMessage message={phoneNumberErrorMessage} show={(isFormSubmitted && !formInputValidate.phone)} />
 
       <input type="submit" value="Submit" onClick={onSubmit}/>
     </form>
