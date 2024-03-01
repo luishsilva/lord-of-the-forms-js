@@ -7,6 +7,7 @@ import { isEmailValid, isCityValid, isPhoneValid } from '../utils/validations'
 export const FunctionalApp = () => {
 
   const [isFormSubmitted, setIsFormSubmitted] = useState(null);
+  const [shouldShowProfileInfo, setShouldShowProfileInfo] = useState(false);
   const [formInputValues, setFormInputValues ] = useState({
     city: '',
     email: '',
@@ -22,7 +23,7 @@ export const FunctionalApp = () => {
     lastName: lastName?.length > 2,
     email: isEmailValid(email),
     city: isCityValid(allCities, city),
-    phone: isPhoneValid(phone)
+    phone: isPhoneValid(phone),
   }
 
   const updateState = (key, value) => {
@@ -33,19 +34,20 @@ export const FunctionalApp = () => {
   };
 
   const onSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    const isInputValid = formInputValidate.firstName && formInputValidate.lastName && formInputValidate.email && formInputValidate.city && formInputValidate.phone;
+    setShouldShowProfileInfo(isInputValid || isFormSubmitted)
     setIsFormSubmitted(true);
   };
 
   return (
     <>
       <h2>Functional</h2>
-      {/* <ProfileInformation
+      <ProfileInformation
         userData={
-          { email, firstName, lastName, phone, city, }
+          shouldShowProfileInfo ? { email, firstName, lastName, phone, city } : false
         }
-        showProfileInformation={showProfileInformation}
-      /> */}
+      />
       <FunctionalForm 
         isFormSubmitted={isFormSubmitted} 
         formInputValues={formInputValues} 
