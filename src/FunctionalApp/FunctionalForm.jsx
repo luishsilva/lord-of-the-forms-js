@@ -12,7 +12,7 @@ const cityErrorMessage = "State is Invalid";
 const phoneNumberErrorMessage = "Invalid Phone Number";
 
 export const FunctionalForm = ({ isFormSubmitted, formInputValues, updateState, onSubmit, formInputValidate }) => {
-  const { firstName, lastName, email, city, phone } = formInputValues;
+  const { firstName, lastName, email, city } = formInputValues;
   const [stateRefs, setStateRefs] = useState({
     refs: [useRef(), useRef(), useRef(), useRef()]
   });
