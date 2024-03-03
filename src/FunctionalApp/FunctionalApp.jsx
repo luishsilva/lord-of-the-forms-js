@@ -38,6 +38,9 @@ export const FunctionalApp = () => {
     const isInputValid = formInputValidate.firstName && formInputValidate.lastName && formInputValidate.email && formInputValidate.city && formInputValidate.phone;
     setShouldShowProfileInfo(isInputValid || isFormSubmitted)
     setIsFormSubmitted(true);
+    if (!isInputValid) {
+      alert('Bad request');
+    }
   };
 
   return (
@@ -45,7 +48,7 @@ export const FunctionalApp = () => {
       <h2>Functional</h2>
       <ProfileInformation
         userData={
-          shouldShowProfileInfo ? { email, firstName, lastName, phone, city } : false
+          shouldShowProfileInfo ? { email, firstName, lastName, phone, city, phone } : false
         }
       />
       <FunctionalForm 
