@@ -36,11 +36,11 @@ export const FunctionalApp = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     const isInputValid = formInputValidate.firstName && formInputValidate.lastName && formInputValidate.email && formInputValidate.city && formInputValidate.phone;
+    if (!isInputValid) {
+      alert('Bad data input');
+    }
     setShouldShowProfileInfo(isInputValid || isFormSubmitted)
     setIsFormSubmitted(true);
-    if (!isInputValid) {
-      alert('Bad request');
-    }
   };
 
   return (
