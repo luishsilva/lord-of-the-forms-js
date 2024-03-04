@@ -1,9 +1,9 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { ErrorMessage } from "../ErrorMessage";
 import { TextInput } from "./components/TextInput";
 import { PhoneInput } from "./components/PhoneInput";
-import { allowOnlyLetters , allowOnlyNumbers } from '../utils/validations'
 import { allCities } from "../utils/all-cities"
+import { isEmailValid, isCityValid, isPhoneValid, validateLetterInput } from '../utils/validations'
 
 const firstNameErrorMessage = "First name must be at least 2 characters long";
 const lastNameErrorMessage = "Last name must be at least 2 characters long";
@@ -11,48 +11,47 @@ const emailErrorMessage = "Email is Invalid";
 const cityErrorMessage = "State is Invalid";
 const phoneNumberErrorMessage = "Invalid Phone Number";
 
-export const FunctionalForm = ({ isFormSubmitted, formInputValues, updateState, onSubmit, formInputValidate }) => {
-  const { firstName, lastName, email, city } = formInputValues;
-  const [stateRefs, setStateRefs] = useState({
-    refs: [useRef(), useRef(), useRef(), useRef()]
+export const FunctionalForm = ({setUser}) => {
+  const [isFormSubmitted, setIsFormSubmitted] = useState(null);
+  const [formInputValues, setFormInputValues ] = useState({
+    city: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    phone: '',
   });
+
+  const { email, firstName, lastName, city } = formInputValues;
+  const formInputValidate = {
+    firstName: formInputValues?.firstName?.length > 2,
+    lastName: formInputValues?.lastName?.length > 2,
+    email: isEmailValid(formInputValues?.email),
+    city: isCityValid(allCities, formInputValues?.city),
+    phone: isPhoneValid(formInputValues?.phone),
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const isInputValid = formInputValidate?.firstName && formInputValidate?.lastName && formInputValidate?.email && formInputValidate?.city && formInputValidate?.phone;
+    setIsFormSubmitted(true);
+    if (!isInputValid) {
+      alert('Bad data input');
+      return
+    }
+    setUser(formInputValues);
+  };
+
+  const updateState = (key, value) => {
+    setFormInputValues(prevState => ({
+      ...prevState,
+      [key]: value,
+    }));
+  };
 
   const onChange = (e) => {
     const { name, value } = e.target;
-    updateState(name, allowOnlyLetters(value));
+    updateState(name, validateLetterInput(value));
   };
-
-  const onPhoneChange = (index) => (e) => {
-    const inputType = e.nativeEvent.inputType;
-    const value = allowOnlyNumbers(e.target.value);
-    const lengths = [2, 2, 2, 1];
-    const currentMaxLength = lengths[index];
-    const nextRef = stateRefs.refs[index + 1];
-    const prevRef = stateRefs.refs[index > 0 ? index - 1 : index];
-    const shouldGoToNextRef = currentMaxLength === value.length;
-    const shouldGoToPrevRef = value.length === 0;
-
-    const newRefs = [...stateRefs.refs];
-    newRefs[index].current.value = value.slice(0, currentMaxLength);
-    setStateRefs(() => {
-      return { refs: newRefs };
-    });
-
-    const phoneValue = stateRefs.refs.map((ref) => ref.current?.value);
-    updateState('phone', phoneValue)
-
-    if (shouldGoToNextRef) {
-      if (nextRef !== undefined) {
-        nextRef.current?.focus();
-      }
-    }
-
-    if (shouldGoToPrevRef  && inputType === 'deleteContentBackward') {
-      if (prevRef !== undefined) {
-        prevRef.current?.focus();
-      }
-    }
-  }
 
   const populateDatalist = () => {
     const datalist = document.getElementById('cities');
@@ -137,7 +136,7 @@ export const FunctionalForm = ({ isFormSubmitted, formInputValues, updateState, 
       <ErrorMessage message={cityErrorMessage} show={(isFormSubmitted && !formInputValidate.city)} />
 
       <div className="input-wrap">
-        <PhoneInput onPhoneChange={onPhoneChange} state={stateRefs} />
+        <PhoneInput updateState={updateState} />
       </div>
       <ErrorMessage message={phoneNumberErrorMessage} show={(isFormSubmitted && !formInputValidate.phone)} />
 

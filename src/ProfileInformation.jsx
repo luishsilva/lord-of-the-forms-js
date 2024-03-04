@@ -23,7 +23,6 @@ export const ProfileInformation = ({ userData }) => {
       </>
     );
   }
-
   const { email, firstName, lastName, phone, city } = userData;
   return (
     <>

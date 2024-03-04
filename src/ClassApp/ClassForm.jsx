@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ErrorMessage } from "../ErrorMessage";
 import { TextInput } from "./components/TextInput";
 import { PhoneInput } from "./components/PhoneInput";
-import { allowOnlyLetters, allowOnlyNumbers } from "../utils/validations"
+import { validateLetterInput, validateNumericInput } from "../utils/validations"
 import { allCities } from "../utils/all-cities"
 
 const firstNameErrorMessage = "First name must be at least 2 characters long";
@@ -20,7 +20,7 @@ export class ClassForm extends Component {
   onChange = (e) => {
     const { name, value } = e.target;
     this.props.setStateMethod({
-      [name]: allowOnlyLetters(value),
+      [name]: validateLetterInput(value),
     }, this.populateDatalist);
   };
 
@@ -43,7 +43,7 @@ export class ClassForm extends Component {
 
   onPhoneChange = (index) => (e) => {
     const inputType = e.nativeEvent.inputType;
-    const value = allowOnlyNumbers(e.target.value);
+    const value = validateNumericInput(e.target.value);
     const lengths = [2, 2, 2, 1];
     const currentMaxLength = lengths[index];
     const nextRef = this.state.refs[index + 1];
