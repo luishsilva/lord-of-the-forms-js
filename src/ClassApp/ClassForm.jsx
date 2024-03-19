@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ErrorMessage } from "../ErrorMessage";
 import { TextInput } from "./components/TextInput";
 import { PhoneInput } from "./components/PhoneInput";
-import { validateLetterInput, validateNumericInput } from "../utils/validations"
+import { isEmailValid, isCityValid, isPhoneValid, validateLetterInput } from "../utils/validations"
 import { allCities } from "../utils/all-cities"
 
 const firstNameErrorMessage = "First name must be at least 2 characters long";
@@ -18,9 +18,6 @@ export class ClassForm extends Component {
     firstName: "",
     lastName: "",
     phone: "",
-  }
-
-  isFormSubmittedState = {
     isFormSubmitted: false
   }
 
@@ -66,17 +63,27 @@ export class ClassForm extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     
-    console.log(this.state.firstName.length > 2)
-    
-    this.props.setStateMethod({
-      user: this.state
-    });
+    const { firstName, lastName, email, city, phone } = this.state;
+    const isInputValid = firstName.length > 2 && lastName.length > 2 && isEmailValid(email) && isCityValid(allCities, city) && isPhoneValid(phone);
+    if (!isInputValid) {
+      alert('Bad data input');
+      this.props.setStateMethod({
+        user: null
+      });
+    } else {      
+      this.props.setStateMethod({
+        user: this.state
+      });
+    }
+    this.setState((prevState) => ({
+      ...prevState,
+      isFormSubmitted: true,
+    }));
   }
 
   render() {
 
-    const { firstName, lastName, email, city, phone } = this.state;
-    const { isFormSubmitted } = this.isFormSubmittedState;
+    const { firstName, lastName, email, city, phone, isFormSubmitted } = this.state;
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -87,7 +94,7 @@ export class ClassForm extends Component {
         <div className="input-wrap">
           <TextInput 
             label="First Name"
-            inputProps={{
+            inputProps={{ 
               placeholder:"First Name",
               name: "firstName",
               onChange: this.onChange,
@@ -95,8 +102,8 @@ export class ClassForm extends Component {
             }}
           />
         </div>
-        <ErrorMessage message={firstNameErrorMessage} show={ (isFormSubmitted && hasInputError.includes('firstName'))} />
-
+        <ErrorMessage message={firstNameErrorMessage} show={(isFormSubmitted && firstName.length < 2)} />
+        
         {/* last name input */}
         <div className="input-wrap">
           <TextInput 
@@ -109,7 +116,7 @@ export class ClassForm extends Component {
             }}
           />
         </div>
-        <ErrorMessage message={lastNameErrorMessage} show={isFormSubmitted && hasInputError.includes('lastName')} />
+        <ErrorMessage message={lastNameErrorMessage} show={(isFormSubmitted && lastName.length < 2)} />
 
         {/* Email Input */}
         <div className="input-wrap">
@@ -123,7 +130,7 @@ export class ClassForm extends Component {
             }}
           />
         </div>
-        <ErrorMessage message={emailErrorMessage} show={isFormSubmitted && hasInputError.includes('email')} />
+        <ErrorMessage message={emailErrorMessage} show={isFormSubmitted && !isEmailValid(email)} />
 
         {/* City Input */}
         <div className="input-wrap">
@@ -142,12 +149,12 @@ export class ClassForm extends Component {
           />
           <datalist id="cities" />
         </div>
-        <ErrorMessage message={cityErrorMessage} show={isFormSubmitted && hasInputError.includes('city')} />
+        <ErrorMessage message={cityErrorMessage} show={isFormSubmitted && !isCityValid(allCities, city)} />
 
         <div className="input-wrap">
           <PhoneInput updatePhoneState={this.updatePhoneState} />
         </div>
-        <ErrorMessage message={phoneNumberErrorMessage} show={isFormSubmitted && hasInputError.includes('phone')} />
+        <ErrorMessage message={phoneNumberErrorMessage} show={isFormSubmitted && !isPhoneValid(phone)} />
 
         <input 
           type="submit" 
