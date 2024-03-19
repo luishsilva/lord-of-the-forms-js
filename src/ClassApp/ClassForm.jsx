@@ -12,16 +12,30 @@ const cityErrorMessage = "State is Invalid";
 const phoneNumberErrorMessage = "Invalid Phone Number";
 
 export class ClassForm extends Component {
-
   state = {
-    refs: [React.createRef(), React.createRef(), React.createRef(), React.createRef(),],
+    city: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+  }
+
+  isFormSubmittedState = {
+    isFormSubmitted: false
   }
 
   onChange = (e) => {
     const { name, value } = e.target;
-    this.props.setStateMethod({
-      [name]: validateLetterInput(value),
-    }, this.populateDatalist);
+    this.setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }), this.populateDatalist);
+  };
+
+  updatePhoneState = (value) => {
+    this.setState({
+      phone: value
+    });
   };
 
   populateDatalist = () => {
@@ -41,47 +55,31 @@ export class ClassForm extends Component {
     });
   };
 
-  onPhoneChange = (index) => (e) => {
-    const inputType = e.nativeEvent.inputType;
-    const value = validateNumericInput(e.target.value);
-    const lengths = [2, 2, 2, 1];
-    const currentMaxLength = lengths[index];
-    const nextRef = this.state.refs[index + 1];
-    const prevRef = this.state.refs[index > 0 ? index - 1 : index];
-    const shouldGoToNextRef = currentMaxLength === value.length;
-    const shouldGoToPrevRef = value.length === 0;
+  formInputValidate = {
+    firstName: this.state.firstName?.length > 2,
+    lastName: this.state.lastName?.length > 2,
+    email: 'value3',
+    city: 'value3',
+    phone: 'value3',
+  };
 
-    const newRefs = [...this.state.refs];
-    newRefs[index].current.value = value.slice(0, currentMaxLength);
-  
-    // Update the state with the new array of refs
-    this.setState({ refs: newRefs }, () => {
-      // After updating state, get the phone value and call setStateMethod
-      const phoneValue = this.state.refs.map((ref) => ref.current.value);
-      this.props.setStateMethod({
-        phone: phoneValue,
-      });
+  onSubmit = (e) => {
+    e.preventDefault();
+    
+    console.log(this.state.firstName.length > 2)
+    
+    this.props.setStateMethod({
+      user: this.state
     });
-
-    if (shouldGoToNextRef) {
-      if (nextRef !== undefined) {
-        nextRef.current?.focus();
-      }
-    }
-
-    if (shouldGoToPrevRef  && inputType === 'deleteContentBackward') {
-      if (prevRef !== undefined) {
-        prevRef.current?.focus();
-      }
-    }
   }
 
   render() {
-    const { onSubmit, } = this.props;
-    const { city, email, firstName, lastName, isFormSubmitted, hasInputError } = this.props.stateData;
+
+    const { firstName, lastName, email, city, phone } = this.state;
+    const { isFormSubmitted } = this.isFormSubmittedState;
 
     return (
-      <form onSubmit={onSubmit}>
+      <form onSubmit={this.onSubmit}>
         <u>
           <h3>User Information Form</h3>
         </u>
@@ -147,9 +145,8 @@ export class ClassForm extends Component {
         <ErrorMessage message={cityErrorMessage} show={isFormSubmitted && hasInputError.includes('city')} />
 
         <div className="input-wrap">
-          <PhoneInput state={this.state} onPhoneChange={this.onPhoneChange} />
+          <PhoneInput updatePhoneState={this.updatePhoneState} />
         </div>
-
         <ErrorMessage message={phoneNumberErrorMessage} show={isFormSubmitted && hasInputError.includes('phone')} />
 
         <input 

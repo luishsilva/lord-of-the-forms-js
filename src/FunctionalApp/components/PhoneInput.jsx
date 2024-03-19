@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { TextInput } from "./TextInput"
 import { validateNumericInput } from '../../utils/validations'
 
-export const PhoneInput = ( {updateState }) => {
+export const PhoneInput = ({ updatePhoneState }) => {
     const [stateRefs, setStateRefs] = useState({
         refs: [useRef(), useRef(), useRef(), useRef()]
     });
@@ -24,7 +24,7 @@ export const PhoneInput = ( {updateState }) => {
         });
 
         const phoneValue = stateRefs.refs.map((ref) => ref.current?.value);
-        updateState('phone', phoneValue)
+        updatePhoneState('phone', phoneValue)
 
         if (shouldGoToNextRef) {
             if (nextRef !== undefined) {

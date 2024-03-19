@@ -6,7 +6,7 @@ import { allCities } from "../utils/all-cities"
 
 export class ClassApp extends Component {
 
-  state = {
+  /* state = {
     isFormSubmitted: false,
     city: "",
     email: "",
@@ -15,25 +15,33 @@ export class ClassApp extends Component {
     phone: "",
     hasInputError: [],
     showProfileInformation: false,
+  } */
+
+  state = {
+    user: null
   }
 
   setAppState = (newState) => {
+    this.setState(newState);
+  }
+
+  /* setAppState = (newState) => {
     const key = Object.keys(newState)[0];
     const value = newState[key];
     this.validateInput(key,value)
     this.setState(newState);
-  }
+  } */
 
-  onSubmit = (e) => {
+  /* onSubmit = (e) => {
     e.preventDefault();
     this.validateFormSubmit(this.state);
     this.setState((prevState) => ({
       isFormSubmitted: true,
       showProfileInformation: prevState.hasInputError?.length === 0 
     }));
-  }
+  } */
 
-  addError = (key) => {
+  /* addError = (key) => {
     this.setState((prevState) => {
       if (!prevState.hasInputError.includes(key)) {
         return {
@@ -42,9 +50,9 @@ export class ClassApp extends Component {
       }
       return prevState;
     });
-  };
+  }; */
 
-  removeError = (key) => {
+  /* removeError = (key) => {
     this.setState((prevState) => {
       const filteredErrors = prevState.hasInputError?.filter((item) => item !== key);
       if (filteredErrors.length !== prevState.hasInputError?.length) {
@@ -54,9 +62,9 @@ export class ClassApp extends Component {
       }
       return prevState;
     });
-  };
+  }; */
 
-  validateInput = (key, value) => {
+  /* validateInput = (key, value) => {
     switch (key) {
       case 'firstName':
       case 'lastName':
@@ -90,32 +98,30 @@ export class ClassApp extends Component {
       default:
         break;
     }
-  }
+  } */
 
-  validateFormSubmit = (formInputs) => {
+  /* validateFormSubmit = (formInputs) => {
     if (formInputs && typeof formInputs === 'object') {
       Object.entries(formInputs).forEach(([key, value]) => {
         this.validateInput(key, value)
       });
     }
-  }
+  } */
 
   render() {
-    const { email, firstName, lastName, phone, city, showProfileInformation } = this.state;
-
+    /* const { email, firstName, lastName, phone, city, showProfileInformation } = this.state; */
+    const { user } = this.state;
     return (
       <>
         <h2>Class</h2>
         <ProfileInformation
-          userData={
-            { email, firstName, lastName, phone, city, }
-          }
-          showProfileInformation={showProfileInformation}
+          userData={user}
         />
         <ClassForm 
-          onSubmit={this.onSubmit}
-          stateData={this.state}
-          setStateMethod={this.setAppState}
+          userStateData={this.state}
+          /* onSubmit={this.onSubmit} */
+          /* stateData={this.state}*/
+          setStateMethod={this.setAppState} 
         />
       </>
     );
